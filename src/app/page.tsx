@@ -1,6 +1,7 @@
 import SignOut from '@/components/SignOut';
 import { getAuthSession } from '@/lib/auth';
 import Image from 'next/image';
+import Link from 'next/link';
 
 export default async function Home() {
   const session = await getAuthSession();
@@ -14,7 +15,10 @@ export default async function Home() {
           <SignOut />
         </div>
       ) : (
-        <p>Not Logged In.</p>
+        <>
+          <p>Not Logged In.</p>
+          <Link href='/sign-in'>Sign In</Link>
+        </>
       )}
     </div>
   );

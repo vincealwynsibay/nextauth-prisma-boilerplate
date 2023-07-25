@@ -2,6 +2,11 @@ import { PrismaAdapter } from '@next-auth/prisma-adapter';
 import { NextAuthOptions, getServerSession } from 'next-auth';
 import { db } from './db';
 import GoogleProvider from 'next-auth/providers/google';
+import GithubProvider from 'next-auth/providers/github';
+import EmailProvider from 'next-auth/providers/email';
+import { ServerClient } from 'postmark';
+
+const postmarkClient = new ServerClient('fef4f58e-c406-4388-888b-de692504f71f');
 
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(db),
@@ -12,14 +17,61 @@ export const authOptions: NextAuthOptions = {
     signIn: '/sign-in',
   },
   providers: [
-    // TODO: Google
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID!,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
     }),
-    // TODO: Github
+    GithubProvider({
+      clientId: process.env.GITHUB_CLIENT_ID!,
+      clientSecret: process.env.GITHUB_CLIENT_SECRET!,
+    }),
+
+    EmailProvider({
+      // server: {
+      //   host: process.env.SMTP_HOST,
+      //   port: process.env.SMTP_PORT,
+      //   auth: {
+      //     user: process.env.SMTP_USER,
+      //     pass: process.env.SMTP_PASSWORD,
+      //   },
+      // },
+      server: process.env.EMAIL_SERVER,
+      from: process.env.SMTP_FROM,
+      // sendVerificationRequest: async ({ identifier, url, provider }) => {
+      //   // const result = await postmarkClient.sendEmailWithTemplate({
+      //   //   TemplateId: 32587765,
+      //   //   To: identifier,
+      //   //   From: provider.from,
+      //   //   TemplateModel: {
+      //   //     action_url: url,
+      //   //     product_name: 'test',
+      //   //   },
+      //   //   Headers: [
+      //   //     {
+      //   //       // Set this to prevent Gmail from threading emails.
+      //   //       // See https://stackoverflow.com/questions/23434110/force-emails-not-to-be-grouped-into-conversations/25435722.
+      //   //       Name: 'X-Entity-Ref-ID',
+      //   //       Value: new Date().getTime() + '',
+      //   //     },
+      //   //   ],
+      //   // });
+
+      //   const result = await postmarkClient.sendEmail({
+      //     From: 'sender@example.org',
+      //     To: 'sender@example.org',
+      //     Subject: 'Hello from Postmark',
+      //     HtmlBody: '<strong>Hello</strong> dear Postmark user.',
+      //     TextBody: 'Hello from Postmark!',
+      //     MessageStream: 'outbound',
+      //   });
+
+      //   if (result.ErrorCode) {
+      //     throw new Error(result.Message);
+      //   }
+      // },
+    }),
+
     // TODO: Email
-    // TODO: Credentials
   ],
   callbacks: {
     async jwt({ token, user }) {
