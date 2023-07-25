@@ -6,8 +6,6 @@ import GithubProvider from 'next-auth/providers/github';
 import EmailProvider from 'next-auth/providers/email';
 import { ServerClient } from 'postmark';
 
-const postmarkClient = new ServerClient('fef4f58e-c406-4388-888b-de692504f71f');
-
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(db),
   session: {
