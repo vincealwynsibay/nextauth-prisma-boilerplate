@@ -25,14 +25,6 @@ export const authOptions: NextAuthOptions = {
     }),
 
     EmailProvider({
-      // server: {
-      //   host: process.env.SMTP_HOST,
-      //   port: process.env.SMTP_PORT,
-      //   auth: {
-      //     user: process.env.SMTP_USER,
-      //     pass: process.env.SMTP_PASSWORD,
-      //   },
-      // },
       server: process.env.EMAIL_SERVER,
       from: process.env.SMTP_FROM,
       // sendVerificationRequest: async ({ identifier, url, provider }) => {
@@ -106,6 +98,6 @@ export const authOptions: NextAuthOptions = {
   },
 };
 
-export const getAuthSession = async () => {
-  return await getServerSession();
+export const getAuthSession = () => {
+  return getServerSession(authOptions);
 };

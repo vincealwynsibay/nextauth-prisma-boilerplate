@@ -62,9 +62,8 @@ const UserAuthForm = (props: Props) => {
           Login
         </button>
       </div>
-      {/* <button onClick={signInWithGoogle}>Google</button> */}
+      <button onClick={signInWithGoogle}>Google</button>
       <button onClick={signInWithGithub}>Github</button>
-      <button onClick={signInWithEmail}>Email</button>
     </div>
   );
 };
