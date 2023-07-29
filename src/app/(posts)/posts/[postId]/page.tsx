@@ -10,7 +10,7 @@ interface pageProps {
   params: { postId: string };
 }
 
-const Page: FC<pageProps> = async ({ params }) => {
+const page: FC<pageProps> = async ({ params }) => {
   const post = await db.post.findFirst({
     where: {
       id: params.postId,
@@ -25,18 +25,33 @@ const Page: FC<pageProps> = async ({ params }) => {
   }
 
   return (
-    <div className=' mx-auto h-full w-full sm:w-[600px]'>
+    <div className=' mx-auto h-full w-full sm:w-[600px] pt-12'>
       <div className='flex flex-col gap-6'>
-        <div className='flex justify-between'>
-          <div className='flex flex-col gap-2'>
-            <h1 className='text-4xl capitalize font-bold'>{post.title}</h1>
-            <p className='text-muted-foreground'>by {post.author.name}</p>
-          </div>
-          <div className='flex items-center gap-4'>
+        <div className='flex flex-col gap-4'>
+          <div className='flex items-center self-end gap-4'>
             <EditPost post={post} />
             <DeletePost post={post} />
           </div>
+          <div className='flex justify-between'>
+            <div className='flex flex-col gap-2'>
+              <h1 className='text-4xl capitalize font-bold'>{post.title}</h1>
+              <p className='text-muted-foreground'>by {post.author.name}</p>
+            </div>
+          </div>
         </div>
+
+        {/* <div className='flex flex-col gap-3'>
+          <h1 className='text-4xl capitalize font-bold'>{post.title}</h1>
+          <div className='flex gap-2 justify-between items-center'>
+            <p className='text-muted-foreground'>
+              by <span className='font-medium'>{post.author.name}</span>
+            </p>
+            <div className='flex items-center gap-4'>
+              <EditPost post={post} />
+              <DeletePost post={post} />
+            </div>
+          </div>
+        </div> */}
 
         <p>{post.content}</p>
       </div>
@@ -44,4 +59,4 @@ const Page: FC<pageProps> = async ({ params }) => {
   );
 };
 
-export default Page;
+export default page;

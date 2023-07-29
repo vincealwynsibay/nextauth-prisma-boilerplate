@@ -62,26 +62,28 @@ const EditPost = ({ post }: Props) => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant='outline'>Edit Profile</Button>
+        <Button variant='outline' className='flex'>
+          Edit Profile
+        </Button>
       </DialogTrigger>
       <DialogContent className='w-full sm:max-w-[500px]'>
         <DialogHeader>
-          <DialogTitle>Edit profile</DialogTitle>
+          <DialogTitle>Edit Post</DialogTitle>
           <DialogDescription>
-            Make changes to your profile here. Click save when you're done.
+            Make changes to your post here. Click save when you're done.
           </DialogDescription>
         </DialogHeader>
         <form id='edit-post-form' onSubmit={handleSubmit(onSubmit)}>
-          <div className='grid gap-4 py-4'>
-            <div className=''>
-              <Label htmlFor='name' className='text-right'>
+          <div className='grid gap-6 py-4'>
+            <div className='flex flex-col gap-2'>
+              <Label htmlFor='name' className=''>
                 Title
               </Label>
               <Input {...register('title')} id='name' className='col-span-3' />
             </div>
-            <div className=''>
-              <Label htmlFor='username' className='text-right'>
-                Username
+            <div className='flex flex-col gap-2'>
+              <Label htmlFor='username' className=''>
+                Content
               </Label>
               <Textarea
                 id='username'

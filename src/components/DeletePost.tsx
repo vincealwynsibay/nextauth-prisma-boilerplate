@@ -46,7 +46,7 @@ const DeletePost = ({ post }: Props) => {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button className='bg-red-500 hover:bg-red-400'>Delete</Button>
+        <Button>Delete</Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
@@ -58,10 +58,7 @@ const DeletePost = ({ post }: Props) => {
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction
-            className='bg-red-500 hover:bg-red-400'
-            onClick={deletePost}
-          >
+          <AlertDialogAction className='' onClick={deletePost}>
             Continue
           </AlertDialogAction>
         </AlertDialogFooter>
