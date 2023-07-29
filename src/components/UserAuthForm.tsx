@@ -1,6 +1,11 @@
 'use client';
 import { signIn } from 'next-auth/react';
 import { useState } from 'react';
+import { Input } from './ui/Input';
+import { Separator } from '@/components/ui/Separator';
+import { Button } from './ui/Button';
+import { Icons } from './Icons';
+import { Github, GithubIcon } from 'lucide-react';
 
 type Props = {};
 
@@ -48,22 +53,51 @@ const UserAuthForm = (props: Props) => {
   };
 
   return (
-    <div>
-      <div className=''>
-        <p>email</p>
-        <input
+    <div className='grid gap-3'>
+      <div className='flex flex-col gap-2'>
+        <Input
           value={data}
           type='email'
           placeholder='name@example.com'
           autoComplete='email'
           onChange={(e) => setData(e.target.value)}
         />
-        <button type='submit' onClick={signInWithEmail}>
-          Login
-        </button>
+        <Button
+          size={'sm'}
+          className='block'
+          type='submit'
+          onClick={signInWithEmail}
+        >
+          Sign In with Email
+        </Button>
       </div>
-      <button onClick={signInWithGoogle}>Google</button>
-      <button onClick={signInWithGithub}>Github</button>
+
+      <div className='relative'>
+        <div className='absolute inset-0 flex items-center'>
+          <div className='w-full border-t'></div>
+        </div>
+        <div className='relative flex justify-center text-xs uppercase'>
+          <div className='bg-background text-muted-foreground'>
+            Or Continue With
+          </div>
+        </div>
+      </div>
+      <Button
+        variant={'outline'}
+        onClick={signInWithGoogle}
+        className='flex items-center gap-2'
+      >
+        <Icons.google className='w-4 h-4' />
+        Sign In with Google
+      </Button>
+      <Button
+        variant={'outline'}
+        onClick={signInWithGithub}
+        className='flex items-center gap-2'
+      >
+        <Icons.github className='w-4 h-4' />
+        Sign In with Github
+      </Button>
     </div>
   );
 };

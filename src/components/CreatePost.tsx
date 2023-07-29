@@ -1,26 +1,61 @@
 'use client';
 
 import axios from 'axios';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import React, { useState } from 'react';
+import { Input } from './ui/Input';
+import { Textarea } from './ui/TextArea';
+import { Button } from './ui/Button';
+import { postPayload, postSchema } from '@/lib/validators/Post';
+import { useToast } from './ui/use-toast';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
+import { Label } from './ui/Label';
 
 type Props = {};
 
 const CreatePost = (props: Props) => {
-  const [title, setTitle] = useState<string>('');
-  const [content, setContent] = useState<string>('');
+  const {
+    register,
+    handleSubmit,
+    reset,
+    resetField,
+    formState: { errors },
+  } = useForm<postPayload>({
+    resolver: zodResolver(postSchema),
+    defaultValues: {
+      title: '',
+      content: '',
+    },
+  });
+
   const router = useRouter();
+  const { toast } = useToast();
 
-  const createPost = async (e: React.SyntheticEvent) => {
-    e.preventDefault();
+  const onSubmit = async (values: postPayload) => {
+    const postObject: postPayload = {
+      title: values.title,
+      content: values.content,
+    };
 
-    const res = await axios.post('/api/posts', {
-      title: title,
-      content: content,
+    const res = await fetch('/api/posts', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(postObject),
     });
 
-    if (res.data) {
-      router.refresh();
+    if (!res?.ok) {
+      toast({
+        title: 'Your post was not created.',
+        content: 'Something went wrong while creating your post',
+        variant: 'destructive',
+      });
+    } else {
+      resetField('title');
+      resetField('content');
+      router.push('/posts');
     }
 
     return;
@@ -28,20 +63,19 @@ const CreatePost = (props: Props) => {
 
   return (
     <div>
-      <form>
-        <input
-          value={title}
-          placeholder='title'
-          onChange={(e) => setTitle(e.target.value)}
-        />
-        <textarea
-          placeholder='content'
-          value={content}
-          onChange={(e) => setContent(e.target.value)}
-          cols={20}
-          rows={10}
-        />
-        <button onClick={createPost}>Create</button>
+      <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col gap-4 '>
+        <div>
+          <Label>Title</Label>
+          <Input {...register('title')} />
+          {errors?.title && <p>{errors.title.message}</p>}
+        </div>
+        <div>
+          <Label>Content</Label>
+          <Textarea {...register('content')} rows={20} />
+          {errors?.content && <p>{errors.content.message}</p>}
+        </div>
+
+        <Button type='submit'>Create Post</Button>
       </form>
     </div>
   );

@@ -2,10 +2,11 @@ import SignOut from '@/components/SignOut';
 import { getAuthSession } from '@/lib/auth';
 import Image from 'next/image';
 import Link from 'next/link';
+import { headers } from 'next/headers';
 
 export default async function Home() {
   const session = await getAuthSession();
-  console.log('session', session);
+
   return (
     <div>
       {session?.user ? (
