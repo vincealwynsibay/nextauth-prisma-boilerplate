@@ -27,41 +27,7 @@ export const authOptions: NextAuthOptions = {
     EmailProvider({
       server: process.env.EMAIL_SERVER,
       from: process.env.SMTP_FROM,
-      // sendVerificationRequest: async ({ identifier, url, provider }) => {
-      //   // const result = await postmarkClient.sendEmailWithTemplate({
-      //   //   TemplateId: 32587765,
-      //   //   To: identifier,
-      //   //   From: provider.from,
-      //   //   TemplateModel: {
-      //   //     action_url: url,
-      //   //     product_name: 'test',
-      //   //   },
-      //   //   Headers: [
-      //   //     {
-      //   //       // Set this to prevent Gmail from threading emails.
-      //   //       // See https://stackoverflow.com/questions/23434110/force-emails-not-to-be-grouped-into-conversations/25435722.
-      //   //       Name: 'X-Entity-Ref-ID',
-      //   //       Value: new Date().getTime() + '',
-      //   //     },
-      //   //   ],
-      //   // });
-
-      //   const result = await postmarkClient.sendEmail({
-      //     From: 'sender@example.org',
-      //     To: 'sender@example.org',
-      //     Subject: 'Hello from Postmark',
-      //     HtmlBody: '<strong>Hello</strong> dear Postmark user.',
-      //     TextBody: 'Hello from Postmark!',
-      //     MessageStream: 'outbound',
-      //   });
-
-      //   if (result.ErrorCode) {
-      //     throw new Error(result.Message);
-      //   }
-      // },
     }),
-
-    // TODO: Email
   ],
   callbacks: {
     async jwt({ token, user }) {
