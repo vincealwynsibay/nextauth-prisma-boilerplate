@@ -12,7 +12,7 @@ import { FC } from 'react';
 
 interface pageProps {}
 
-const page: FC<pageProps> = ({}) => {
+const Page: FC<pageProps> = ({}) => {
   return (
     <div className='container min-h-screen pt-[15vh]'>
       <Card className='w-full grid gap-2 m-auto max-w-4 sm:w-[400px]'>
@@ -33,4 +33,4 @@ const page: FC<pageProps> = ({}) => {
   );
 };
 
-export default page;
+export default Page;

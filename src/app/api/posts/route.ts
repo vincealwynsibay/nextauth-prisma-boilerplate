@@ -17,18 +17,6 @@ export async function GET(req: Request) {
   } catch (error) {}
 }
 
-export async function PUT(req: Request) {
-  try {
-    const session = await getAuthSession();
-
-    if (!session?.user) {
-      return new Response('Unauthorized', { status: 401 });
-    }
-
-    const body = await req.json();
-  } catch (error) {}
-}
-
 export async function POST(req: Request) {
   try {
     const session = await getAuthSession();
@@ -49,7 +37,7 @@ export async function POST(req: Request) {
 
     return new Response(post.id);
   } catch (error) {
-    console.log(error);
+    error;
     if (error instanceof ZodError) {
       return new Response(JSON.stringify(error.issues), { status: 422 });
     }
@@ -58,8 +46,9 @@ export async function POST(req: Request) {
   }
 }
 
-export async function EDIT(req: Request) {
+export async function PUT(req: Request) {
   try {
+    ('nice');
     const session = await getAuthSession();
 
     if (!session) {

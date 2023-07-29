@@ -3,6 +3,7 @@
 import React from 'react';
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogDescription,
   DialogFooter,
@@ -16,8 +17,8 @@ import { Label } from '@/components/ui/Label';
 import { Input } from './ui/Input';
 import {
   postEditPayload,
-  postEditSchema,
   postPayload,
+  postSchema,
 } from '@/lib/validators/Post';
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
@@ -30,19 +31,19 @@ type Props = {
 
 const EditPost = ({ post }: Props) => {
   const router = useRouter();
-  const { register, handleSubmit } = useForm<postEditPayload>({
-    resolver: zodResolver(postEditSchema),
+  const { register, handleSubmit, resetField, reset } = useForm<postPayload>({
+    resolver: zodResolver(postSchema),
     defaultValues: {
-      title: '',
-      content: '',
+      title: post.title,
+      content: post.content,
     },
   });
 
   const onSubmit = async (values: postPayload) => {
     const postObject: postEditPayload = {
       postId: post.id,
-      title: '',
-      content: '',
+      title: values.title,
+      content: values.content,
     };
 
     const res = await fetch('/api/posts', {
@@ -63,41 +64,40 @@ const EditPost = ({ post }: Props) => {
       <DialogTrigger asChild>
         <Button variant='outline'>Edit Profile</Button>
       </DialogTrigger>
-      <DialogContent className='sm:max-w-[425px]'>
+      <DialogContent className='w-full sm:max-w-[500px]'>
         <DialogHeader>
           <DialogTitle>Edit profile</DialogTitle>
           <DialogDescription>
             Make changes to your profile here. Click save when you're done.
           </DialogDescription>
         </DialogHeader>
-        <div className='grid gap-4 py-4'>
-          <div className='grid grid-cols-4 items-center gap-4'>
-            <Label htmlFor='name' className='text-right'>
-              Title
-            </Label>
-            <Input
-              {...register('title')}
-              id='name'
-              value='Pedro Duarte'
-              className='col-span-3'
-            />
+        <form id='edit-post-form' onSubmit={handleSubmit(onSubmit)}>
+          <div className='grid gap-4 py-4'>
+            <div className=''>
+              <Label htmlFor='name' className='text-right'>
+                Title
+              </Label>
+              <Input {...register('title')} id='name' className='col-span-3' />
+            </div>
+            <div className=''>
+              <Label htmlFor='username' className='text-right'>
+                Username
+              </Label>
+              <Textarea
+                id='username'
+                {...register('content')}
+                rows={10}
+                className='col-span-3 block'
+              />
+            </div>
           </div>
-          <div className='grid grid-cols-4 items-center gap-4'>
-            <Label htmlFor='username' className='text-right'>
-              Username
-            </Label>
-            <Textarea
-              id='username'
-              {...register('content')}
-              rows={20}
-              className='col-span-3'
-            />
-          </div>
-        </div>
+        </form>
         <DialogFooter>
-          <Button type='submit' onClick={handleSubmit(onSubmit)}>
-            Save changes
-          </Button>
+          <DialogClose asChild>
+            <Button type='submit' form='edit-post-form'>
+              Save changes
+            </Button>
+          </DialogClose>
         </DialogFooter>
       </DialogContent>
     </Dialog>

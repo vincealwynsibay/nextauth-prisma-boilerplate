@@ -35,7 +35,7 @@ const UserAuthForm = (props: Props) => {
   };
   const signInWithEmail = async (e: React.SyntheticEvent) => {
     e.preventDefault();
-    console.log('test');
+    ('test');
     setIsLoading(true);
     try {
       const signInResult = await signIn('email', {
@@ -44,7 +44,7 @@ const UserAuthForm = (props: Props) => {
         callbackUrl:
           'http://localhost:3000/api/auth/verify-request?provider=email&type=email',
       });
-      console.log(signInResult);
+      signInResult;
     } catch (error) {
       // do something here
     } finally {

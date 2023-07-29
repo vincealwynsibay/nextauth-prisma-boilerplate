@@ -11,7 +11,7 @@ import { FC } from 'react';
 
 interface pageProps {}
 
-const page: FC<pageProps> = ({}) => {
+const Page: FC<pageProps> = ({}) => {
   return (
     <div
       className='min-h-screen container grid flex-col 
@@ -43,4 +43,4 @@ const page: FC<pageProps> = ({}) => {
   );
 };
 
-export default page;
+export default Page;

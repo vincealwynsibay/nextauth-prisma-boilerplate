@@ -9,7 +9,7 @@ const Page = async (props: Props) => {
   const session = await getAuthSession();
 
   if (!session) {
-    return redirect('/');
+    return redirect('/sign-in');
   }
 
   return (

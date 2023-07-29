@@ -24,8 +24,7 @@ const Navbar = async (props: Props) => {
         </div>
 
         {session?.user ? (
-          // <UserAccountNav user={session.user} />
-          <div className=''></div>
+          <UserAccountNav user={session.user} />
         ) : (
           <div className='flex gap-2'>
             <Link

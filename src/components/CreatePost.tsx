@@ -55,6 +55,7 @@ const CreatePost = (props: Props) => {
     } else {
       resetField('title');
       resetField('content');
+      router.refresh();
       router.push('/posts');
     }
 

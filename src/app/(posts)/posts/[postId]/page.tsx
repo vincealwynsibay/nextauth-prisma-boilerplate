@@ -10,7 +10,7 @@ interface pageProps {
   params: { postId: string };
 }
 
-const page: FC<pageProps> = async ({ params }) => {
+const Page: FC<pageProps> = async ({ params }) => {
   const post = await db.post.findFirst({
     where: {
       id: params.postId,
@@ -44,4 +44,4 @@ const page: FC<pageProps> = async ({ params }) => {
   );
 };
 
-export default page;
+export default Page;

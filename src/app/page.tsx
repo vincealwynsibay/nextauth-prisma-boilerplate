@@ -8,7 +8,7 @@ export default async function Home() {
   const session = await getAuthSession();
 
   return (
-    <div>
+    <div className='pt-12'>
       {session?.user ? (
         <div>
           <h1>{session.user.name}</h1>
