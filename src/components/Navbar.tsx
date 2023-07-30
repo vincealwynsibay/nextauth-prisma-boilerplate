@@ -3,6 +3,7 @@ import Link from 'next/link';
 import React from 'react';
 import UserAccountNav from './UserAccountNav';
 import { buttonVariants } from './ui/Button';
+import ChangeThemeButton from './ChangeThemeButton';
 
 type Props = {};
 
@@ -10,7 +11,7 @@ const Navbar = async (props: Props) => {
   const session = await getAuthSession();
 
   return (
-    <nav className='fixed top-0 inset-x-0 bg-gray-50 h-fit border-b  border-zinc-300 py-2'>
+    <nav className='fixed top-0 inset-x-0 h-fit border-b   py-2'>
       <div className='container max-w-7xl flex justify-between items-center'>
         <div className='flex justify-center items-center gap-8'>
           <Link href='/'>
@@ -23,24 +24,28 @@ const Navbar = async (props: Props) => {
           </div>
         </div>
 
-        {session?.user ? (
-          <UserAccountNav user={session.user} />
-        ) : (
-          <div className='flex gap-2'>
-            <Link
-              href='/sign-in'
-              className={buttonVariants({ variant: 'default', size: 'sm' })}
-            >
-              Sign In
-            </Link>
-            <Link
-              href='/sign-up'
-              className={buttonVariants({ variant: 'outline', size: 'sm' })}
-            >
-              Sign Up
-            </Link>
-          </div>
-        )}
+        <div className='flex items-center justify-between gap-4'>
+          <ChangeThemeButton />
+
+          {session?.user ? (
+            <UserAccountNav user={session.user} />
+          ) : (
+            <div className='flex gap-2'>
+              <Link
+                href='/sign-in'
+                className={buttonVariants({ variant: 'default', size: 'sm' })}
+              >
+                Sign In
+              </Link>
+              <Link
+                href='/sign-up'
+                className={buttonVariants({ variant: 'outline', size: 'sm' })}
+              >
+                Sign Up
+              </Link>
+            </div>
+          )}
+        </div>
       </div>
     </nav>
   );
