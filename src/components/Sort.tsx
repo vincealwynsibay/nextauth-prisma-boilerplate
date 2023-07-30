@@ -9,7 +9,6 @@ import {
   DropdownMenuTrigger,
 } from './ui/DropdownMenu';
 import { Separator } from './ui/Separator';
-import { Post } from '@prisma/client';
 import { sortOptions } from '@/config/posts';
 import { Button } from './ui/Button';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
@@ -39,16 +38,6 @@ const Sort = ({}: Props) => {
     [searchParams]
   );
 
-  const onChange = (value: string) => {
-    // startTransition(() =>
-    router.push(
-      `${pathName}?${createQueryString({
-        sort: value,
-      })}`
-    );
-    // );
-  };
-
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -62,7 +51,17 @@ const Sort = ({}: Props) => {
         {sortOptions &&
           sortOptions.map((option) => {
             return (
-              <DropdownMenuItem onClick={() => onChange(option.value)}>
+              <DropdownMenuItem
+                onClick={() =>
+                  startTransition(() =>
+                    router.push(
+                      `${pathName}?${createQueryString({
+                        sort: option.value,
+                      })}`
+                    )
+                  )
+                }
+              >
                 {option.label}
               </DropdownMenuItem>
             );
